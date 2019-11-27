@@ -101,7 +101,7 @@ def train(tf_seed, np_seed, train_steps, out_steps, summary_steps, checkpoint_st
 
             x_eval_batch, y_eval_batch = data.eval_data.get_next_batch(train_batch_size, multiple_passes=True)
             eval_dict = {model.x_input: x_eval_batch, model.y_input: y_eval_batch}
-
+            print("new batch")
             # Output to stdout
             if ii % summary_steps == 0:
                 train_acc, summary = sess.run([model.accuracy, merged_summaries], feed_dict=nat_dict)
@@ -123,7 +123,9 @@ def train(tf_seed, np_seed, train_steps, out_steps, summary_steps, checkpoint_st
                 saver.save(sess, os.path.join(model_dir, 'checkpoint'), global_step=global_step)
 
             # Actual training step
+            print("Applying gradients")
             sess.run(min_step, feed_dict=nat_dict)
+            print("Applied gradients")
 
 
 if __name__ == '__main__':
